@@ -81,10 +81,10 @@ if HOSTNAME == 's29.mydevil.net':
     print('mydev')
     DATABASES = {
         'default': {
-            'NAME': 'p1288_fotov', ## nazwa bazy danych
+            'NAME': 'p1288_jira', ## nazwa bazy danych
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'USER': 'p1288_fotov',
-            'PASSWORD': 'w&$;x8u$kuA6',
+            'USER': 'p1288_jira',
+            'PASSWORD': 'dh4t%54UH?6mQCIF9gsucoExdeO/j5',
             'HOST': 'pgsql29.mydevil.net'
         }
     }
@@ -92,7 +92,7 @@ else:
     print('else')
     DATABASES = {
         'default': {
-            'NAME': 'fotov',  ## nazwa bazy danych
+            'NAME': 'jira_connector',  ## nazwa bazy danych
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'USER': 'postgres',
             'PASSWORD': 'Kartofel1',
@@ -147,6 +147,7 @@ if HOSTNAME == 's29.mydevil.net':
     MEDIA_ROOT = os.path.join(BASE_DIR, 'public', 'media')
 else:
     STATIC_URL = '/static/'
+    MEDIA_URL = '/media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
