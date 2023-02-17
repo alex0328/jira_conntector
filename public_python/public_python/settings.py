@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+import socket
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,8 +27,8 @@ SECRET_KEY = 'django-insecure-(o227ly#51ziokc67rg4tnt!#=2ne(4n1=%*cso^vsy95+cqrk
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['zgloszenia.4tea.pl', '127.0.0.1']
+HOSTNAME = socket.gethostname()
 
 # Application definition
 
@@ -37,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'jira',
+    'bootstrap4',
 ]
 
 MIDDLEWARE = [
@@ -73,12 +77,28 @@ WSGI_APPLICATION = 'public_python.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if HOSTNAME == 's29.mydevil.net':
+    print('mydev')
+    DATABASES = {
+        'default': {
+            'NAME': 'p1288_fotov', ## nazwa bazy danych
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'USER': 'p1288_fotov',
+            'PASSWORD': 'w&$;x8u$kuA6',
+            'HOST': 'pgsql29.mydevil.net'
+        }
     }
-}
+else:
+    print('else')
+    DATABASES = {
+        'default': {
+            'NAME': 'fotov',  ## nazwa bazy danych
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'USER': 'postgres',
+            'PASSWORD': 'Kartofel1',
+            'HOST': 'localhost'
+        }
+    }
 
 
 # Password validation
@@ -115,7 +135,18 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = 'static/'
+if HOSTNAME == 's29.mydevil.net':
+    STATIC_URL = '/static/'
+    MEDIA_URL = '/media/'
+
+    # Zmienna BASE_DIR powinna być utworzona przez Django w pliku settings.py
+    # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+    STATIC_ROOT = os.path.join(BASE_DIR, 'public', 'static')
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'public', 'media')
+else:
+    STATIC_URL = '/static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
